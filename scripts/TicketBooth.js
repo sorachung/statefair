@@ -1,7 +1,32 @@
+import { FoodTicketHolders } from "./food/FoodTicketHolder.js";
+import { GameTicketHolders } from "./games/GameTicketHolder.js";
+import { RideTicketHolders } from "./rides/RideTicketHolders.js";
+import { SideshowTicketHolders } from "./sideshows/SideshowTicketHolder.js";
+import { TotalTicket } from "./TotalTickets.js";
+
 const contentTarget = document.querySelector(".entry")
 const eventHub = document.querySelector("#state-fair")
 
-eventHub.addEventListener()
+RideTicketHolders();
+FoodTicketHolders();
+GameTicketHolders();
+SideshowTicketHolders();
+TotalTicket();
+
+eventHub.addEventListener("click", event => {
+    if (event.target.id === "rideTicket") {
+        const rideEvent = new CustomEvent("rideTicketPurchased")
+        eventHub.dispatchEvent(rideEvent)
+    } else if (event.target.id === "foodTicket") {
+        eventHub.dispatchEvent(new CustomEvent("foodTicketPurchased"))
+    } else if (event.target.id === "gameTicket") {
+        eventHub.dispatchEvent(new CustomEvent("gameTicketPurchased"))
+    } else if (event.target.id === "sideshowTicket") {
+        eventHub.dispatchEvent(new CustomEvent("sideshowTicketPurchased"))
+    } else if (event.target.id === "fullPackageTicket") {
+        eventHub.dispatchEvent(new CustomEvent("fullPackageTicketPurchased"))
+    }
+})
 
 export const TicketBooth = () => {
     contentTarget.innerHTML = `
